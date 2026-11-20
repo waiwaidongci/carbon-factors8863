@@ -1,6 +1,12 @@
 import {request} from './client.js';
-export const loadAll=async()=>Object.fromEntries(await Promise.all(['sources','periods','policies','runs','schedules','deliveries','audits'].map(async k=>[k,await request('/'+k)])));
+export const loadAll=async()=>Object.fromEntries(await Promise.all(['sources','periods','policies','runs','schedules','deliveries','audits','scenarios','measures','plans','catalog'].map(async k=>[k,await request('/'+k)])));
 export const saveSource=(data,id)=>request('/sources'+(id?'/'+id:''),id?'PUT':'POST',{data});
 export const savePolicy=data=>request('/policies','POST',{data});
 export const submitRun=data=>request('/runs','POST',data);
 export const approveRun=(id,note)=>request('/runs/'+id+'/approve','POST',{note});
+export const saveScenario=(data,id)=>request('/scenarios'+(id?'/'+id:''),id?'PUT':'POST',{data});
+export const deleteScenario=id=>request('/scenarios/'+id,'DELETE');
+export const saveMeasure=(data,id)=>request('/measures'+(id?'/'+id:''),id?'PUT':'POST',{data});
+export const deleteMeasure=id=>request('/measures/'+id,'DELETE');
+export const submitPlan=data=>request('/plans','POST',data);
+export const publishPlan=id=>request('/plans/'+id+'/publish','POST',{});
